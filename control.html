@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CONTROL PANEL — English On Stage</title>
+<style>
+  :root {
+    --bg: #0b0f19;
+    --panel: #131b2e;
+    --border: #1e293b;
+    --accent: #38bdf8;
+    --gold: #fbbf24;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --text: #f1f5f9;
+    --sub: #94a3b8;
+    --mono: ui-monospace, Menlo, Consolas, monospace;
+    --sans: "Inter", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    padding: 20px;
+    user-select: none;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+  }
+  .header-title { font-size: 1.25rem; font-weight: 800; color: var(--text); }
+  
+  .open-stage-btn {
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    transition: transform 0.1s ease;
+    margin-left: 14px;
+  }
+  .open-stage-btn:active { transform: scale(0.96); }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .status-badge {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid var(--success);
+    color: var(--success);
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .status-badge.disconnected {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 20px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .panel-heading {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .main-action-btn {
+    background: #22c55e;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+    transition: transform 0.1s ease;
+  }
+  .main-action-btn:active { transform: scale(0.98); }
+  
+  .video-action-btn {
+    background: #8b5cf6;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 1.0rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    transition: transform 0.1s ease;
+  }
+  .video-action-btn:active { transform: scale(0.98); }
+
+  .slide-box-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 480px;
+    overflow-y: auto;
+  }
+  .slide-row {
+    background: #19233c;
+    border: 1px solid #283655;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+  .slide-row:hover { border-color: var(--accent); background: #1f2d4a; }
+  .slide-row.active {
+    background: #0284c7;
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.5);
+  }
+  .s-num { font-family: var(--mono); font-weight: 800; color: var(--gold); font-size: 0.9rem; }
+  .s-txt { font-weight: 600; font-size: 0.88rem; flex: 1; margin-left: 12px; }
+
+  .sfx-controller-title {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--sub);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .sfx-list-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 520px;
+    overflow-y: auto;
+  }
+  .sfx-item {
+    background: #18233a;
+    border: 1px solid #273754;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .sfx-item:hover { background: #223250; border-color: var(--accent); }
+  .sfx-info { display: flex; flex-direction: column; gap: 2px; }
+  .sfx-code { font-family: var(--mono); font-size: 0.78rem; color: var(--sub); }
+  .sfx-name { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+  .sfx-key {
+    background: #0a0f1d;
+    border: 1px solid #334466;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .stop-all-bar {
+    margin-top: 12px;
+  }
+  .stop-btn {
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+  }
+  .stop-btn:active { transform: scale(0.98); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1 class="header-title">CONTROL PANEL</h1>
+    <p style="color: var(--sub); font-size: 0.82rem; margin-top: 2px;">English On Stage — Team FOR VIBES</p>
+  </div>
+  <div class="header-right">
+    <div class="status-badge" id="connStatus">STAGE CONNECTED</div>
+    <button class="open-stage-btn" onclick="openStageScreen()">🚀 MỞ STAGE</button>
+  </div>
+</header>
+
+<div class="main-layout">
+  <div>
+    <div class="action-row">
+      <button class="main-action-btn" onclick="goNextCue()">
+        ▶ NEXT CUE (Enter / ➔)
+      </button>
+      <button class="video-action-btn" id="videoBtn" onclick="toggleIntroVideo()">
+        🎬 INTRO VIDEO (Phím V)
+      </button>
+    </div>
+
+    <div class="panel">
+      <div class="panel-heading">
+        <span>KỊCH BẢN 12 SLIDES</span>
+        <span id="currentSlideDisplay" style="color: var(--sub); font-size: 0.85rem;">Slide: 1 / 12</span>
+      </div>
+      <div class="slide-box-list" id="slideList">
+        <div class="slide-row active" onclick="goToSlide(1)"><span class="s-num">S1</span><span class="s-txt">Team Intro (Dennis, Shanna, Daniel, Kiera)</span></div>
+        <div class="slide-row" onclick="goToSlide(2)"><span class="s-num">S2</span><span class="s-txt">Where Are We? (Rèm đóng + Đen 5s + Mở rèm)</span></div>
+        <div class="slide-row" onclick="goToSlide(3)"><span class="s-num">S3</span><span class="s-txt">Rule #1: Put phones on the table</span></div>
+        <div class="slide-row" onclick="goToSlide(4)"><span class="s-num">S4</span><span class="s-txt">Rule #1: Survive 10 mins without phone</span></div>
+        <div class="slide-row" onclick="goToSlide(5)"><span class="s-num">S5</span><span class="s-txt">Who are you?</span></div>
+        <div class="slide-row" onclick="goToSlide(6)"><span class="s-num">S6</span><span class="s-txt">The perfect feed</span></div>
+        <div class="slide-row" onclick="goToSlide(7)"><span class="s-num">S7</span><span class="s-txt">What are you afraid of?</span></div>
+        <div class="slide-row" onclick="goToSlide(8)"><span class="s-num">S8</span><span class="s-txt">The funny guy</span></div>
+        <div class="slide-row" onclick="goToSlide(9)"><span class="s-num">S9</span><span class="s-txt">The argument</span></div>
+        <div class="slide-row" onclick="goToSlide(10)"><span class="s-num">S10</span><span class="s-txt">The reveal</span></div>
+        <div class="slide-row" onclick="goToSlide(11)"><span class="s-num">S11</span><span class="s-txt">Final 60 seconds</span></div>
+        <div class="slide-row" onclick="goToSlide(12)"><span class="s-num">S12</span><span class="s-txt">Kết thúc (Team For Vibes + Pháo hoa)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <div class="sfx-controller-title">LIVE SFX CONTROLLER</div>
+      <div class="sfx-list-vertical">
+        <div class="sfx-item" onclick="playSFX('n2')">
+          <div class="sfx-info"><span class="sfx-code">N2_message</span><span class="sfx-name">💬 Phone Message</span></div>
+          <span class="sfx-key">Phím 2</span>
+        </div>
+        <div class="sfx-item" onclick="playSFX('n3')">
+          <div class="sfx-info"><span class="sfx-code">N3_khong_hieu</span><span class="sfx-name">❓ Nhạc không hiểu</span></div>
+          <span class="sfx-key">Phím 3</span>
+        </div>
+        <div class="sfx-item" onclick="playSFX('n4')">
+          <div class="sfx-info"><span class="sfx-code">N4_khan_gia_cuoi</span><span class="sfx-name">👏 Khán Giả Cười</span></div>
+          <span class="sfx-key">Phím 4</span>
+        </div>
+        <div class="sfx-item" onclick="playSFX('n5')">
+          <div class="sfx-info"><span class="sfx-code">N5_cuoi_deu</span><span class="sfx-name">🎵 Khạc Cười Đểu</span></div>
+          <span class="sfx-key">Phím 5</span>
+        </div>
+        <div class="sfx-item" onclick="playSFX('n6')">
+          <div class="sfx-info"><span class="sfx-code">N6_han_quoc</span><span class="sfx-name">🇰🇷 Nhạc Hàn Quốc Drama</span></div>
+          <span class="sfx-key">Phím 6</span>
+        </div>
+        <div class="sfx-item" onclick="playSFX('n7')">
+          <div class="sfx-info"><span class="sfx-code">N7_tieng_vit</span><span class="sfx-name">🦆 Tiếng Vịt Kêu</span></div>
+          <span class="sfx-key">Phím 7</span>
+        </div>
+        <div class="sfx-item" onclick="playSFX('n8')">
+          <div class="sfx-info"><span class="sfx-code">N8_chup_anh</span><span class="sfx-name">📸 Tiếng Chụp Ảnh</span></div>
+          <span class="sfx-key">Phím 8</span>
+        </div>
+        <div class="sfx-item" onclick="toggleFireworks()" style="background: rgba(245, 158, 11, 0.15); border-color: #f59e0b;">
+          <div class="sfx-info"><span class="sfx-code" style="color: var(--gold);">EFFECT</span><span class="sfx-name" style="color: var(--gold);">✨ Bật/Tắt Pháo Hoa + Ảnh</span></div>
+          <span class="sfx-key" style="color: var(--gold); border-color: #f59e0b;">Tab / C</span>
+        </div>
+      </div>
+
+      <div class="stop-all-bar">
+        <button class="stop-btn" onclick="panicStop()">⛔ TẮT TOÀN BỘ ÂM THANH (Space)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var channel = new BroadcastChannel('stage_cue_channel');
+  var curSlide = 1;
+  var totalSlides = 12;
+  var videoPlaying = false;
+  var connTimer = null;
+
+  var statusBadge = document.getElementById('connStatus');
+  var currentSlideDisplay = document.getElementById('currentSlideDisplay');
+  var videoBtn = document.getElementById('videoBtn');
+
+  function openStageScreen() {
+    window.open('stage.html', '_blank', 'width=1920,height=1080');
+  }
+
+  window.addEventListener('load', function() {
+    channel.postMessage({ type: 'RELOAD_STAGE' });
+  });
+
+  channel.onmessage = function(e) {
+    if (e.data && e.data.type === 'HEARTBEAT_FROM_STAGE') {
+      statusBadge.textContent = 'STAGE CONNECTED';
+      statusBadge.classList.remove('disconnected');
+      clearTimeout(connTimer);
+      connTimer = setTimeout(function(){
+        statusBadge.textContent = 'STAGE DISCONNECTED';
+        statusBadge.classList.add('disconnected');
+      }, 3000);
+    }
+  };
+
+  function updateSlideUI(num) {
+    curSlide = num;
+    currentSlideDisplay.textContent = 'Slide: ' + num + ' / ' + totalSlides;
+    var rows = document.querySelectorAll('.slide-row');
+    rows.forEach(function(row, idx) {
+      if (idx + 1 === num) row.classList.add('active');
+      else row.classList.remove('active');
+    });
+  }
+
+  function goToSlide(num) {
+    videoPlaying = false;
+    updateVideoBtnUI();
+    updateSlideUI(num);
+    channel.postMessage({ type: 'GO_TO_SLIDE', slide: num });
+  }
+
+  function goNextCue() {
+    if (curSlide < totalSlides) {
+      goToSlide(curSlide + 1);
+    }
+  }
+
+  function goPrevCue() {
+    if (curSlide > 1) {
+      goToSlide(curSlide - 1);
+    }
+  }
+
+  function updateVideoBtnUI() {
+    if (videoPlaying) {
+      videoBtn.style.background = '#22c55e';
+      videoBtn.style.color = '#000';
+      videoBtn.textContent = '⏹ DỪNG VIDEO (Phím V)';
+    } else {
+      videoBtn.style.background = '#8b5cf6';
+      videoBtn.style.color = '#fff';
+      videoBtn.textContent = '🎬 INTRO VIDEO (Phím V)';
+    }
+  }
+
+  function toggleIntroVideo() {
+    videoPlaying = !videoPlaying;
+    updateVideoBtnUI();
+    if (videoPlaying) {
+      channel.postMessage({ type: 'PLAY_INTRO_VIDEO' });
+    } else {
+      channel.postMessage({ type: 'STOP_INTRO_VIDEO' });
+    }
+  }
+
+  function toggleFireworks() {
+    channel.postMessage({ type: 'TOGGLE_FIREWORKS' });
+  }
+
+  function playSFX(key) {
+    channel.postMessage({ type: 'PLAY_SFX', key: key });
+  }
+
+  function panicStop() {
+    videoPlaying = false;
+    updateVideoBtnUI();
+    channel.postMessage({ type: 'STOP_ALL' });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      goNextCue();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goPrevCue();
+    } else if (e.key === ' ' || e.code === 'Space') {
+      e.preventDefault();
+      panicStop();
+    } else if (e.key === 'v' || e.key === 'V') {
+      toggleIntroVideo();
+    } else if (e.key === 'c' || e.key === 'C' || e.key === 'Tab') {
+      e.preventDefault();
+      toggleFireworks();
+    } else if (e.key >= '2' && e.key <= '8') {
+      playSFX('n' + e.key);
+    }
+  });
+</script>
+</body>
+</html>
