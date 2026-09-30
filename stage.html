@@ -914,27 +914,27 @@ autoScaleStage();
     offCanvas.height = 1080;
     var offCtx = offCanvas.getContext('2d');
 
-    // Chữ FOR VIBES ở trên cùng
+    // Chữ FOR VIBES ở trên cùng (To rõ)
     offCtx.fillStyle = '#fff';
-    offCtx.font = '900 130px "Inter", sans-serif';
+    offCtx.font = '900 120px "Inter", sans-serif';
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
     offCtx.fillText('FOR VIBES', 1920 / 2, 210);
 
-    // Dòng 1 của câu cảm ơn (To rõ, dễ nhìn từ xa)
-    offCtx.font = '900 58px "Inter", sans-serif';
-    offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 350);
+    // Dòng 1: THANK YOU FOR WATCHING (Phóng to cực rõ)
+    offCtx.font = '900 68px "Inter", sans-serif';
+    offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 345);
 
-    // Dòng 2 của câu cảm ơn (Cân đối bên dưới)
-    offCtx.font = '900 52px "Inter", sans-serif';
-    offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 425);
+    // Dòng 2: AND FEELING OUR STORY (Cân đối, dãn khoảng cách rõ ràng)
+    offCtx.font = '900 62px "Inter", sans-serif';
+    offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 435);
 
     var imgData = offCtx.getImageData(0, 0, 1920, 1080).data;
     textTargetPoints = [];
     var step = 7;
 
-    for (var y = 130; y < 480; y += step) {
-      for (var x = 100; x < 1820; x += step) {
+    for (var y = 130; y < 500; y += step) {
+      for (var x = 80; x < 1840; x += step) {
         var index = (y * 1920 + x) * 4;
         if (imgData[index + 3] > 128) {
           textTargetPoints.push({ x: x, y: y });
