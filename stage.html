@@ -632,10 +632,11 @@ autoScaleStage();
     if (data.type === 'PING') {
       notifyControl();
     } else if (data.type === 'SYNC_STATE') {
-      // Khi Control Panel load lại, Stage sẽ nhận diện slide hiện tại mà không bị reset trắng
       if (data.slide && currentSlideIndex !== data.slide) {
         triggerSlideTransition(data.slide);
       }
+    } else if (data.type === 'RELOAD_STAGE') {
+      location.reload();
     } else if (data.type === 'PLAY_INTRO_VIDEO') {
       playIntroVideo();
     } else if (data.type === 'STOP_INTRO_VIDEO') {
@@ -646,7 +647,7 @@ autoScaleStage();
     } else if (data.type === 'PLAY_SFX') {
       playSFX(data.key);
       if (data.key === 'n2') triggerPhoneMessage();
-      if (data.key === 'n10') startFormationFireworks();
+      // CHỈ PHÁT ÂM THANH N10, KHÔNG GỌI HÀM PHÁO HOA Ở ĐÂY NỮA
     } else if (data.type === 'STOP_ALL') {
       stopIntroVideo();
       stopAllAudio();
