@@ -758,8 +758,8 @@ autoScaleStage();
 
   var slides = {
     1: { type: 'cover' },
-    2: { type: 'blank_phones', sound: false }, // Slide 2: Không âm thanh chuyển slide
-    3: { title: 'WHERE ARE WE?', sub: '', sound: true }, // Slide 3: Có hiệu ứng rèm đóng 5s và âm thanh N0
+    2: { type: 'blank_phones', sound: false },
+    3: { title: 'WHERE ARE WE?', sub: '', sound: true },
     4: { title: 'RULE #1', sub: 'PUT YOUR PHONES ON THE TABLE', sound: true },
     5: { title: 'RULE #2', sub: 'SURVIVE 10 MINUTES WITHOUT YOUR PHONE', sound: true },
     6: { title: 'WHO ARE YOU?', sub: '', sound: true },
@@ -873,7 +873,6 @@ autoScaleStage();
   function triggerSlideTransition(targetSlide) {
     var isForward = targetSlide > currentSlideIndex;
 
-    // Chuyển từ Slide 2 sang Slide 3: Kéo rèm lại, giữ 5s (phát âm thanh N0), rồi mở sang Slide 3
     if (currentSlideIndex === 2 && targetSlide === 3) {
       document.body.classList.remove('curtains-fully-open');
       document.body.classList.add('curtains-closed');
@@ -923,6 +922,7 @@ autoScaleStage();
   }
   resizeFw();
 
+  // ĐÃ ĐIỀU CHỈNH TỌA ĐỘ VẼ CHỮ XUỐNG DƯỚI LOGO (tăng giá trị Y lên)
   function generateTextPoints() {
     var offCanvas = document.createElement('canvas');
     offCanvas.width = 1920;
@@ -930,22 +930,25 @@ autoScaleStage();
     var offCtx = offCanvas.getContext('2d');
 
     offCtx.fillStyle = '#fff';
-    offCtx.font = '900 120px "Inter", sans-serif';
+    offCtx.font = '900 110px "Inter", sans-serif';
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
-    offCtx.fillText('FOR VIBES', 1920 / 2, 210);
-
-    offCtx.font = '900 68px "Inter", sans-serif';
-    offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 345);
+    // Dòng 1: FOR VIBES (Dời xuống Y = 280 thay vì 210)
+    offCtx.fillText('FOR VIBES', 1920 / 2, 280);
 
     offCtx.font = '900 62px "Inter", sans-serif';
-    offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 435);
+    // Dòng 2: THANK YOU FOR WATCHING (Dời xuống Y = 430 thay vì 345)
+    offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 430);
+
+    // Dòng 3: AND FEELING OUR STORY (Dời xuống Y = 520 thay vì 435)
+    offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 520);
 
     var imgData = offCtx.getImageData(0, 0, 1920, 1080).data;
     textTargetPoints = [];
     var step = 7;
 
-    for (var y = 130; y < 500; y += step) {
+    // Điều chỉnh vùng quét pixel tương ứng với vị trí mới (từ Y=200 đến Y=580)
+    for (var y = 200; y < 580; y += step) {
       for (var x = 80; x < 1840; x += step) {
         var index = (y * 1920 + x) * 4;
         if (imgData[index + 3] > 128) {
