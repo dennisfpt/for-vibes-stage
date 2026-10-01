@@ -296,6 +296,16 @@
           <div class="sfx-info"><span class="sfx-code">N8_chup_anh</span><span class="sfx-name">📸 Tiếng Chụp Ảnh</span></div>
           <span class="sfx-key">Phím 8</span>
         </div>
+        <!-- Thêm nút âm thanh số 9 -->
+        <div class="sfx-item" onclick="playSFX('n9')">
+          <div class="sfx-info"><span class="sfx-code">N9_nhac_vlog</span><span class="sfx-name">🎥 Nhạc Vlog</span></div>
+          <span class="sfx-key">Phím 9</span>
+        </div>
+        <!-- Thêm nút âm thanh số 0 -->
+        <div class="sfx-item" onclick="playSFX('n10')">
+          <div class="sfx-info"><span class="sfx-code">N10_phao_hoa</span><span class="sfx-name">🎆 Tiếng Pháo Hoa</span></div>
+          <span class="sfx-key">Phím 0</span>
+        </div>
         <div class="sfx-item" onclick="toggleFireworks()" style="background: rgba(245, 158, 11, 0.15); border-color: #f59e0b;">
           <div class="sfx-info"><span class="sfx-code" style="color: var(--gold);">EFFECT</span><span class="sfx-name" style="color: var(--gold);">✨ Bật/Tắt Pháo Hoa + Ảnh</span></div>
           <span class="sfx-key" style="color: var(--gold); border-color: #f59e0b;">Tab / C</span>
@@ -422,6 +432,10 @@
       toggleFireworks();
     } else if (e.key >= '2' && e.key <= '8') {
       playSFX('n' + e.key);
+    } else if (e.key === '9') {
+      playSFX('n9');
+    } else if (e.key === '0') {
+      playSFX('n10');
     }
   });
 </script>
