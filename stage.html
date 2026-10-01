@@ -548,7 +548,7 @@
 <audio id="snd_n7" src="audio/N7_nhac_tieng_vit.mp3" preload="auto"></audio>
 <audio id="snd_n8" src="audio/N8_nhac_tieng_chụp_anh.mp3" preload="auto"></audio>
 <audio id="snd_n9" src="audio/meme.mp3" preload="auto"></audio>
-<audio id="snd_n10" src="audio/beep.mp4" preload="auto"></audio>
+<audio id="snd_n10" src="audio/beep.mp3" preload="auto"></audio>
 
 <script>
 function autoScaleStage() {
@@ -987,8 +987,7 @@ autoScaleStage();
     if (fwActive) return;
     fwActive = true;
     fwCanvas.classList.add('active');
-    playSFX('n10');
-
+    
     if (slide1Center) slide1Center.style.opacity = '0';
 
     activeParticles = [];
