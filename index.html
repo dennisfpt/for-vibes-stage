@@ -243,22 +243,23 @@
 
     <div class="panel">
       <div class="panel-heading">
-        <span>KỊCH BẢN 12 SLIDES</span>
-        <span id="currentSlideDisplay" style="color: var(--sub); font-size: 0.85rem;">Slide: 1 / 12</span>
+        <span>KỊCH BẢN 13 SLIDES</span>
+        <span id="currentSlideDisplay" style="color: var(--sub); font-size: 0.85rem;">Slide: 1 / 13</span>
       </div>
       <div class="slide-box-list" id="slideList">
         <div class="slide-row active" onclick="goToSlide(1)"><span class="s-num">S1</span><span class="s-txt">Team Intro (Dennis, Shanna, Daniel, Kiera)</span></div>
-        <div class="slide-row" onclick="goToSlide(2)"><span class="s-num">S2</span><span class="s-txt">Where Are We? (Rèm đóng + Đen 5s + Mở rèm)</span></div>
-        <div class="slide-row" onclick="goToSlide(3)"><span class="s-num">S3</span><span class="s-txt">Rule #1: Put phones on the table</span></div>
-        <div class="slide-row" onclick="goToSlide(4)"><span class="s-num">S4</span><span class="s-txt">Rule #2: Survive 10 mins without phone</span></div>
-        <div class="slide-row" onclick="goToSlide(5)"><span class="s-num">S5</span><span class="s-txt">Who are you?</span></div>
-        <div class="slide-row" onclick="goToSlide(6)"><span class="s-num">S6</span><span class="s-txt">The perfect feed</span></div>
-        <div class="slide-row" onclick="goToSlide(7)"><span class="s-num">S7</span><span class="s-txt">What are you afraid of?</span></div>
-        <div class="slide-row" onclick="goToSlide(8)"><span class="s-num">S8</span><span class="s-txt">The funny guy</span></div>
-        <div class="slide-row" onclick="goToSlide(9)"><span class="s-num">S9</span><span class="s-txt">The argument</span></div>
-        <div class="slide-row" onclick="goToSlide(10)"><span class="s-num">S10</span><span class="s-txt">The reveal</span></div>
-        <div class="slide-row" onclick="goToSlide(11)"><span class="s-num">S11</span><span class="s-txt">Final 60 seconds</span></div>
-        <div class="slide-row" onclick="goToSlide(12)"><span class="s-num">S12</span><span class="s-txt">Kết thúc (Team For Vibes + Pháo hoa)</span></div>
+        <div class="slide-row" onclick="goToSlide(2)"><span class="s-num">S2</span><span class="s-txt">Mở màn (4 Điện thoại + Header sự kiện)</span></div>
+        <div class="slide-row" onclick="goToSlide(3)"><span class="s-num">S3</span><span class="s-txt">Where Are We? (Rèm đóng + Đen 5s + Mở rèm)</span></div>
+        <div class="slide-row" onclick="goToSlide(4)"><span class="s-num">S4</span><span class="s-txt">Rule #1: Put phones on the table</span></div>
+        <div class="slide-row" onclick="goToSlide(5)"><span class="s-num">S5</span><span class="s-txt">Rule #2: Survive 10 mins without phone</span></div>
+        <div class="slide-row" onclick="goToSlide(6)"><span class="s-num">S6</span><span class="s-txt">Who are you?</span></div>
+        <div class="slide-row" onclick="goToSlide(7)"><span class="s-num">S7</span><span class="s-txt">The perfect feed</span></div>
+        <div class="slide-row" onclick="goToSlide(8)"><span class="s-num">S8</span><span class="s-txt">What are you afraid of?</span></div>
+        <div class="slide-row" onclick="goToSlide(9)"><span class="s-num">S9</span><span class="s-txt">The funny guy</span></div>
+        <div class="slide-row" onclick="goToSlide(10)"><span class="s-num">S10</span><span class="s-txt">The argument</span></div>
+        <div class="slide-row" onclick="goToSlide(11)"><span class="s-num">S11</span><span class="s-txt">The reveal</span></div>
+        <div class="slide-row" onclick="goToSlide(12)"><span class="s-num">S12</span><span class="s-txt">Final 60 seconds</span></div>
+        <div class="slide-row" onclick="goToSlide(13)"><span class="s-num">S13</span><span class="s-txt">Kết thúc (Team For Vibes + Pháo hoa)</span></div>
       </div>
     </div>
   </div>
@@ -311,7 +312,7 @@
 <script>
   var channel = new BroadcastChannel('stage_cue_channel');
   var curSlide = 1;
-  var totalSlides = 12;
+  var totalSlides = 13;
   var videoPlaying = false;
   var connTimer = null;
 
