@@ -757,11 +757,10 @@ autoScaleStage();
     currentPhoneStep = (currentPhoneStep + 1) % phoneSequence.length;
   }
 
-  // Cấu hình danh sách 13 slides chuẩn xác
   var slides = {
     1: { type: 'cover' },
-    2: { type: 'blank_phones', sound: true }, // Slide 2: Chỉ có 4 điện thoại và header sự kiện
-    3: { title: 'WHERE ARE WE?', sub: '', sound: true },
+    2: { type: 'blank_phones', sound: false }, // Slide 2: Không âm thanh chuyển slide
+    3: { title: 'WHERE ARE WE?', sub: '', sound: true }, // Slide 3: Có hiệu ứng rèm đóng 5s và âm thanh N0
     4: { title: 'RULE #1', sub: 'PUT YOUR PHONES ON THE TABLE', sound: true },
     5: { title: 'RULE #2', sub: 'SURVIVE 10 MINUTES WITHOUT YOUR PHONE', sound: true },
     6: { title: 'WHO ARE YOU?', sub: '', sound: true },
@@ -853,10 +852,6 @@ autoScaleStage();
       setTimeout(function(){
         topBrandHeader.classList.add('show');
       }, 100);
-
-      if (s.sound && isForward) {
-        playTransitionN1();
-      }
     } else {
       preshowImg.classList.add('hidden');
       slide1Center.classList.add('hidden');
@@ -879,7 +874,8 @@ autoScaleStage();
   function triggerSlideTransition(targetSlide) {
     var isForward = targetSlide > currentSlideIndex;
 
-    if (currentSlideIndex === 1 && targetSlide === 2) {
+    // Chuyển từ Slide 2 sang Slide 3: Kéo rèm lại, giữ 5s (phát âm thanh N0), rồi mở sang Slide 3
+    if (currentSlideIndex === 2 && targetSlide === 3) {
       document.body.classList.remove('curtains-fully-open');
       document.body.classList.add('curtains-closed');
       playSuspenseN0();
@@ -888,7 +884,7 @@ autoScaleStage();
         applySlideContent(targetSlide, true);
         document.body.classList.remove('curtains-closed');
         document.body.classList.add('curtains-fully-open');
-      }, 6500);
+      }, 5000);
 
     } else if (currentSlideIndex === 13 && targetSlide === 1) {
       applySlideContent(1, false);
