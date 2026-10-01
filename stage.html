@@ -631,8 +631,11 @@ autoScaleStage();
     if (!data) return;
     if (data.type === 'PING') {
       notifyControl();
-    } else if (data.type === 'RELOAD_STAGE') {
-      location.reload();
+    } else if (data.type === 'SYNC_STATE') {
+      // Khi Control Panel load lại, Stage sẽ nhận diện slide hiện tại mà không bị reset trắng
+      if (data.slide && currentSlideIndex !== data.slide) {
+        triggerSlideTransition(data.slide);
+      }
     } else if (data.type === 'PLAY_INTRO_VIDEO') {
       playIntroVideo();
     } else if (data.type === 'STOP_INTRO_VIDEO') {
