@@ -922,7 +922,7 @@ autoScaleStage();
   }
   resizeFw();
 
-  // ĐÃ ĐIỀU CHỈNH TỌA ĐỘ VẼ CHỮ XUỐNG DƯỚI HẲN KHUNG LOGO TRÊN CÙNG
+  // ĐÃ ĐIỀU CHỈNH VỊ TRÍ VẼ CHỮ NẰM Ở KHOẢNG GIỮA (LÊN CAO HƠN SO VỚI TRƯỚC NHƯNG VẪN THẤP HƠN LOGO)
   function generateTextPoints() {
     var offCanvas = document.createElement('canvas');
     offCanvas.width = 1920;
@@ -933,24 +933,24 @@ autoScaleStage();
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
 
-    // Dòng 1: FOR VIBES
+    // Dòng 1: FOR VIBES (Nằm ở Y = 360)
     offCtx.font = '900 110px "Inter", sans-serif';
-    offCtx.fillText('FOR VIBES', 1920 / 2, 480);
+    offCtx.fillText('FOR VIBES', 1920 / 2, 360);
 
-    // Dòng 2: THANK YOU FOR WATCHING
+    // Dòng 2: THANK YOU FOR WATCHING (Nằm ở Y = 490)
     offCtx.font = '900 62px "Inter", sans-serif';
-    offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 620);
+    offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 490);
 
-    // Dòng 3: AND FEELING OUR STORY
+    // Dòng 3: AND FEELING OUR STORY (Nằm ở Y = 575)
     offCtx.font = '900 62px "Inter", sans-serif';
-    offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 710);
+    offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 575);
 
     var imgData = offCtx.getImageData(0, 0, 1920, 1080).data;
     textTargetPoints = [];
     var step = 7;
 
-    // Quét vùng pixel từ Y = 400 đến Y = 780 (nằm trọn ở giữa, không đè logo)
-    for (var y = 400; y < 780; y += step) {
+    // Quét vùng pixel tương ứng ở khoảng giữa màn hình (Y từ 300 đến 640)
+    for (var y = 300; y < 640; y += step) {
       for (var x = 80; x < 1840; x += step) {
         var index = (y * 1920 + x) * 4;
         if (imgData[index + 3] > 128) {
