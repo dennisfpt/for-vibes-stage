@@ -335,21 +335,22 @@
   }
 
   window.addEventListener('load', function() {
-    channel.postMessage({ type: 'RELOAD_STAGE' });
+    // Không bắt Stage reload lại từ đầu nữa, chỉ gửi trạng thái hiện tại (nếu có)
+    var savedSlide = localStorage.getItem('current_stage_slide');
+    if (savedSlide) {
+      goToSlide(parseInt(savedSlide));
+    } else {
+      channel.postMessage({ type: 'SYNC_STATE', slide: curSlide });
+    }
   });
 
-  channel.onmessage = function(e) {
-    if (e.data && e.data.type === 'HEARTBEAT_FROM_STAGE') {
-      statusBadge.textContent = 'STAGE CONNECTED';
-      statusBadge.classList.remove('disconnected');
-      clearTimeout(connTimer);
-      connTimer = setTimeout(function(){
-        statusBadge.textContent = 'STAGE DISCONNECTED';
-        statusBadge.classList.add('disconnected');
-      }, 3000);
-    }
-  };
-
+  function goToSlide(num) {
+    videoPlaying = false;
+    updateVideoBtnUI();
+    updateSlideUI(num);
+    localStorage.setItem('current_stage_slide', num); // Lưu lại slide hiện tại
+    channel.postMessage({ type: 'GO_TO_SLIDE', slide: num });
+  }
   function updateSlideUI(num) {
     curSlide = num;
     currentSlideDisplay.textContent = 'Slide: ' + num + ' / ' + totalSlides;
