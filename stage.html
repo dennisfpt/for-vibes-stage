@@ -542,13 +542,13 @@
 <audio id="snd_n1" src="audio/N1_begin.mp3" preload="auto"></audio>
 <audio id="snd_n2" src="audio/N2_nhac_message.mp3" preload="auto"></audio>
 <audio id="snd_n3" src="audio/N3_nhac_khong_hieu.mp3" preload="auto"></audio>
-<audio id="snd_n4" src="audio/N4_nhac_khan_gia_cuoi.mp3" preload="auto"></audio> 
+<audio id="snd_n4" src="audio/N4_nhac_khan_gia_cuoi.mp3" preload="auto"></audio>
 <audio id="snd_n5" src="audio/N5_cuoi_deu.mp3" preload="auto"></audio>
-<audio id="snd_n6" src="audio/N6_nhac_han_quoc.mp3" preload="auto"></audio>
+<audio id="snd_n6" src="audio/N6_han_quoc.mp3" preload="auto"></audio>
 <audio id="snd_n7" src="audio/N7_nhac_tieng_vit.mp3" preload="auto"></audio>
 <audio id="snd_n8" src="audio/N8_nhac_tieng_chụp_anh.mp3" preload="auto"></audio>
-<audio id="snd_n9" src="audio/N9_meme.mp3" preload="auto"></audio>
-<audio id="snd_n10" src="audio/N10_beep.mp4" preload="auto"></audio>
+<audio id="snd_n9" src="audio/meme.mp3" preload="auto"></audio>
+<audio id="snd_n10" src="audio/beep.mp4" preload="auto"></audio>
 
 <script>
 function autoScaleStage() {
@@ -647,7 +647,6 @@ autoScaleStage();
     } else if (data.type === 'PLAY_SFX') {
       playSFX(data.key);
       if (data.key === 'n2') triggerPhoneMessage();
-      // CHỈ PHÁT ÂM THANH N10, KHÔNG GỌI HÀM PHÁO HOA Ở ĐÂY NỮA
     } else if (data.type === 'STOP_ALL') {
       stopIntroVideo();
       stopAllAudio();
@@ -926,7 +925,6 @@ autoScaleStage();
   }
   resizeFw();
 
-  // ĐÃ ĐIỀU CHỈNH VỊ TRÍ VẼ CHỮ NẰM Ở KHOẢNG GIỮA (LÊN CAO HƠN SO VỚI TRƯỚC NHƯNG VẪN THẤP HƠN LOGO)
   function generateTextPoints() {
     var offCanvas = document.createElement('canvas');
     offCanvas.width = 1920;
@@ -937,15 +935,12 @@ autoScaleStage();
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
 
-    // Dòng 1: FOR VIBES (Nằm ở Y = 360)
     offCtx.font = '900 110px "Inter", sans-serif';
     offCtx.fillText('FOR VIBES', 1920 / 2, 360);
 
-    // Dòng 2: THANK YOU FOR WATCHING (Nằm ở Y = 490)
     offCtx.font = '900 62px "Inter", sans-serif';
     offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 490);
 
-    // Dòng 3: AND FEELING OUR STORY (Nằm ở Y = 575)
     offCtx.font = '900 62px "Inter", sans-serif';
     offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 575);
 
@@ -953,7 +948,6 @@ autoScaleStage();
     textTargetPoints = [];
     var step = 7;
 
-    // Quét vùng pixel tương ứng ở khoảng giữa màn hình (Y từ 300 đến 640)
     for (var y = 300; y < 640; y += step) {
       for (var x = 80; x < 1840; x += step) {
         var index = (y * 1920 + x) * 4;
@@ -1150,11 +1144,6 @@ autoScaleStage();
     burstParticles = [];
     burstRockets = [];
     hideTeamPhotos();
-
-    if (audioList.n10) {
-      audioList.n10.pause();
-      audioList.n10.currentTime = 0;
-    }
   }
 
   window.STAGE_API = {
@@ -1164,7 +1153,6 @@ autoScaleStage();
     playSFXTrack: function(trackKey) {
       playSFX(trackKey);
       if (trackKey === 'n2') triggerPhoneMessage();
-      if (trackKey === 'n10') startFormationFireworks();
     },
     stopAllAudio: function() { 
       stopIntroVideo();
@@ -1204,13 +1192,10 @@ autoScaleStage();
       if (introWrap.classList.contains('active')) stopIntroVideo();
       else playIntroVideo();
     }
-    if (e.key === 'c' || e.key === 'C') {
+    if (e.key === 'c' || e.key === 'C' || e.key === 'Tab') {
+      e.preventDefault();
       if (fwActive) stopAllFireworks();
       else startFormationFireworks();
-    }
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      startFormationFireworks();
     }
   });
 
