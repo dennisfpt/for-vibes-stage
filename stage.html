@@ -549,6 +549,7 @@
 <audio id="snd_n8" src="audio/N8_nhac_tieng_chụp_anh.mp3" preload="auto"></audio>
 <audio id="snd_n9" src="audio/meme.mp3" preload="auto"></audio>
 <audio id="snd_n10" src="audio/beep.mp3" preload="auto"></audio>
+<audio id="snd_n11" src="audio/N11_tieng_phao_hoa.mp3" preload="auto"></audio>
 
 <script>
 function autoScaleStage() {
@@ -591,7 +592,8 @@ autoScaleStage();
     n7: document.getElementById('snd_n7'),
     n8: document.getElementById('snd_n8'),
     n9: document.getElementById('snd_n9'),
-    n10: document.getElementById('snd_n10')
+    n10: document.getElementById('snd_n10'),
+    n11: document.getElementById('snd_n11')
   };
 
   var channel = new BroadcastChannel('stage_cue_channel');
@@ -987,7 +989,8 @@ autoScaleStage();
     if (fwActive) return;
     fwActive = true;
     fwCanvas.classList.add('active');
-    
+    playSFX('n11'); // Kích hoạt âm thanh pháo hoa N11 ở đây
+
     if (slide1Center) slide1Center.style.opacity = '0';
 
     activeParticles = [];
