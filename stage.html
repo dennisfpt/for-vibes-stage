@@ -757,19 +757,21 @@ autoScaleStage();
     currentPhoneStep = (currentPhoneStep + 1) % phoneSequence.length;
   }
 
+  // Cấu hình danh sách 13 slides chuẩn xác
   var slides = {
     1: { type: 'cover' },
-    2: { title: 'WHERE ARE WE?', sub: '', sound: true },
-    3: { title: 'RULE #1', sub: 'PUT YOUR PHONES ON THE TABLE', sound: true },
-    4: { title: 'RULE #2', sub: 'SURVIVE 10 MINUTES WITHOUT YOUR PHONE', sound: true },
-    5: { title: 'WHO ARE YOU?', sub: '', sound: true },
-    6: { title: 'THE PERFECT FEED', sub: '', sound: true },
-    7: { title: 'WHAT ARE YOU AFRAID OF?', sub: '', sound: true },
-    8: { title: 'THE FUNNY GUY', sub: '', sound: true },
-    9: { title: 'THE ARGUMENT', sub: '', sound: true },
-    10: { title: 'THE REVEAL', sub: '', sound: true },
-    11: { title: 'FINAL 60 SECONDS', sub: '', sound: true },
-    12: { type: 'cover' }
+    2: { type: 'blank_phones', sound: true }, // Slide 2: Chỉ có 4 điện thoại và header sự kiện
+    3: { title: 'WHERE ARE WE?', sub: '', sound: true },
+    4: { title: 'RULE #1', sub: 'PUT YOUR PHONES ON THE TABLE', sound: true },
+    5: { title: 'RULE #2', sub: 'SURVIVE 10 MINUTES WITHOUT YOUR PHONE', sound: true },
+    6: { title: 'WHO ARE YOU?', sub: '', sound: true },
+    7: { title: 'THE PERFECT FEED', sub: '', sound: true },
+    8: { title: 'WHAT ARE YOU AFRAID OF?', sub: '', sound: true },
+    9: { title: 'THE FUNNY GUY', sub: '', sound: true },
+    10: { title: 'THE ARGUMENT', sub: '', sound: true },
+    11: { title: 'THE REVEAL', sub: '', sound: true },
+    12: { title: 'FINAL 60 SECONDS', sub: '', sound: true },
+    13: { type: 'cover' }
   };
 
   function typeWriterEffect(titleText, subText, isForward) {
@@ -837,6 +839,24 @@ autoScaleStage();
       topBrandHeader.classList.remove('show');
       slideTitle.textContent = '';
       slideSub.textContent = '';
+    } else if (s.type === 'blank_phones') {
+      if (typingTimer) clearInterval(typingTimer);
+      preshowImg.classList.add('hidden');
+      slide1Center.classList.add('hidden');
+      mainTextWrap.classList.remove('animate-in');
+      slideTitle.textContent = '';
+      slideSub.textContent = '';
+      
+      cornerPhonesWrap.classList.add('show');
+      document.body.classList.add('curtains-fully-open');
+      topBrandHeader.classList.remove('show');
+      setTimeout(function(){
+        topBrandHeader.classList.add('show');
+      }, 100);
+
+      if (s.sound && isForward) {
+        playTransitionN1();
+      }
     } else {
       preshowImg.classList.add('hidden');
       slide1Center.classList.add('hidden');
@@ -870,11 +890,11 @@ autoScaleStage();
         document.body.classList.add('curtains-fully-open');
       }, 6500);
 
-    } else if (currentSlideIndex === 12 && targetSlide === 1) {
+    } else if (currentSlideIndex === 13 && targetSlide === 1) {
       applySlideContent(1, false);
       document.body.classList.remove('curtains-fully-open');
     } else {
-      if (targetSlide === 1 || targetSlide === 12) {
+      if (targetSlide === 1 || targetSlide === 13) {
         document.body.classList.remove('curtains-fully-open');
       } else {
         document.body.classList.add('curtains-fully-open');
@@ -883,7 +903,7 @@ autoScaleStage();
     }
 
     currentSlideIndex = targetSlide;
-    if (targetSlide === 1 || targetSlide === 12) {
+    if (targetSlide === 1 || targetSlide === 13) {
       currentPhoneStep = 0;
       stopAllFireworks();
     }
@@ -914,18 +934,15 @@ autoScaleStage();
     offCanvas.height = 1080;
     var offCtx = offCanvas.getContext('2d');
 
-    // Chữ FOR VIBES ở trên cùng (To rõ)
     offCtx.fillStyle = '#fff';
     offCtx.font = '900 120px "Inter", sans-serif';
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
     offCtx.fillText('FOR VIBES', 1920 / 2, 210);
 
-    // Dòng 1: THANK YOU FOR WATCHING (Phóng to cực rõ)
     offCtx.font = '900 68px "Inter", sans-serif';
     offCtx.fillText('THANK YOU FOR WATCHING', 1920 / 2, 345);
 
-    // Dòng 2: AND FEELING OUR STORY (Cân đối, dãn khoảng cách rõ ràng)
     offCtx.font = '900 62px "Inter", sans-serif';
     offCtx.fillText('AND FEELING OUR STORY', 1920 / 2, 435);
 
